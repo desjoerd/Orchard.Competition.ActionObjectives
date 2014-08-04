@@ -1,0 +1,29 @@
+﻿@using DeSjoerd.Competition.ActionObjectives.Extensions;
+@{
+    DeSjoerd.Competition.Models.ObjectivePart objective = Model.ObjectivePart;
+}
+
+
+@using (Html.BeginFormAntiForgeryPost(Url.VideoObjectiveSubmit(objective), FormMethod.Post))
+{
+    <h4>@T("Nieuwe poging")</h4>
+    <fieldset>
+        <legend>@T("Video")</legend>
+        <div class="row">
+            <div class="columns large-12">
+                <p>
+                    Upload de video naar Youtube of een andere plek en stuur de URL op.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns large-2">
+                <label for="videoUrl">@T("Video url:")</label>
+            </div>
+            <div class="columns large-10">
+                <input type="text" name="videoUrl" />
+            </div>
+        </div>
+        <input type="submit" name="submit" value="@T("Opsturen")" class="button" />
+    </fieldset>
+}

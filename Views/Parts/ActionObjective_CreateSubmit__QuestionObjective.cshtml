@@ -1,0 +1,51 @@
+﻿@using DeSjoerd.Competition.ActionObjectives.Extensions;
+@using Orchard.ContentManagement;
+@{
+    DeSjoerd.Competition.Models.ObjectivePart objective = Model.ObjectivePart;
+    DeSjoerd.Competition.ActionObjectives.Models.QuestionObjectivePart question = objective.As<DeSjoerd.Competition.ActionObjectives.Models.QuestionObjectivePart>();
+
+    IEnumerable<DeSjoerd.Competition.ActionObjectives.Models.ActionSubmitPart> submits = Model.TeamSubmits;
+
+    int triesLeft = -1;
+    if (question.MaxTries != 0)
+    {
+        var teamSubmitCount = submits.Count();
+        triesLeft = question.MaxTries - teamSubmitCount >= 0 ? question.MaxTries - teamSubmitCount : 0;
+    }
+}
+
+@using (Html.BeginFormAntiForgeryPost(Url.QuestionObjectiveSubmit(objective), FormMethod.Post))
+{
+    <h4>@T("Nieuwe poging")</h4>
+    if (triesLeft != 0)
+    {
+        if(triesLeft != -1) {
+            <h5>@T.Plural("Nog één poging over", "Nog {0} pogingen over", triesLeft, triesLeft)</h5>
+        }
+        <fieldset>
+            <legend>@T("Antwoord")</legend>
+            <div class="row">
+                <div class="columns large-2">
+                    <label for="answer">@T("Antwoord:")</label>
+                </div>
+                <div class="columns large-10">
+                    @if(!question.IsMultipleChoice) {
+                        <input type="text" name="answer" />
+                    }
+                    else {
+                        for(int i = 0; i < question.Choices.Count; i++) {
+                            var id = "answer" + i;
+                            <label for="@id">
+                                <input type="radio" name="answer" value="@question.Choices[i].Choice" id="@id">
+                                @question.Choices[i].Choice
+                            </label>
+                        }
+                    }
+                </div>
+            </div>
+            <input type="submit" name="submit" value="@T("Opsturen")" class="button" />
+        </fieldset>
+    } else {
+        <h5>@T("Geen pogingen meer over.")</h5>
+    }
+}

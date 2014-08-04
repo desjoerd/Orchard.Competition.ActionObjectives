@@ -1,0 +1,11 @@
+﻿@using DeSjoerd.Competition.Models;
+@{
+    GamePart game = Model.Game;
+    ObjectivePart objective = Model.Objective;
+
+    var gameTitle = game != null ? game.Title : "???";
+    var objectiveTitle = objective != null ? objective.Title : "???";
+}
+<ul class="pageStatus">
+    <li>&nbsp;&#124;&nbsp;@T("For: ")@gameTitle - @objectiveTitle</li>
+</ul>

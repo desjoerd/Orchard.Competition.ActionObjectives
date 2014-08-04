@@ -1,0 +1,140 @@
+﻿@model DeSjoerd.Competition.ActionObjectives.ViewModels.QuestionObjectiveEditorViewModel
+@{
+    Script.Require("jQuery");
+    Script.Require("jQueryUI_Sortable");
+}
+
+<fieldset>
+    <h3>@T("Answers")</h3>
+    <ol id="answers">
+        @for (int i = 0; i < Model.Answers.Count; i++)
+        {
+            var answer = Model.Answers[i];
+        
+            <li class="answer">
+                <label class="answer-label" for="QuestionObjective.Answers[@i]">@T("Answer:")</label>
+                <input class="answer-input" name="QuestionObjective.Answers[@i]" type="text" value="@answer" />
+
+                <a href="#answers" class="remove-answer">X</a>
+            </li>
+        }
+    </ol>
+    <a href="#answers" id="add-answer">@T("Add Answer")</a>
+</fieldset>
+<fieldset>
+    <h3>@T("Multiple choice")</h3>
+    @Html.EditorFor(m => m.IsMultipleChoice)
+    <label for="@Html.FieldIdFor(m => m.IsMultipleChoice)" class="forcheckbox">@T("Is a multiple choice question")</label>
+    @Html.ValidationMessageFor(m => m.AutoValidate)
+    <label>@T("Choices:")</label>
+    <ol id="choices">
+        @for(int i = 0; i < Model.Choices.Count; i++) {
+            var choice = Model.Choices[i];
+            
+            <li class="choice">
+                <input class="choice-input" name="QuestionObjective.Choices[@i]" type="text" value="@choice" />
+
+                <a href="#choices" class="remove-choice">X</a>
+            </li>
+        }
+    </ol>
+    <a href="#choices" id="add-choice">@T("Add Choice")</a>
+</fieldset>
+
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.MaxTries)">@T("Maximum Tries")</label>
+    @Html.EditorFor(m => m.MaxTries)
+    @Html.ValidationMessageFor(m => m.MaxTries)
+</fieldset>
+
+<fieldset>
+    @Html.EditorFor(m => m.AutoValidate)
+    <label for="@Html.FieldIdFor(m => m.AutoValidate)" class="forcheckbox">@T("Auto Validate Answer")</label>
+    @Html.ValidationMessageFor(m => m.AutoValidate)
+</fieldset>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.Hint)">@T("Hint")</label>
+    @Html.EditorFor(m => m.Hint)
+    @Html.ValidationMessageFor(m => m.Hint)
+
+    <label for="@Html.FieldIdFor(m => m.HintPrice)">@T("Hint Price")</label>
+    @Html.EditorFor(m => m.HintPrice)
+    @Html.ValidationMessageFor(m => m.HintPrice)
+</fieldset>
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        $(function () {
+            // answers
+            var updateAnswerNames = function () {
+                $("#answers").children().each(function (index) {
+
+                    var nameBase = "QuestionObjective.Answers[" + index + "]";
+
+                    $(this).children(".answer-label").attr("for", nameBase);
+                    $(this).children(".answer-input").attr("name", nameBase);
+                });
+            };
+
+            var buildAnswer = function () {
+                var scoreOption = $("<li class='answer' />");
+
+                scoreOption.append("<label class='answer-label'>@T("Answer:")</label>")
+                           .append("<input class='answer-input' type='text' />");
+
+                scoreOption.append("<a href='#answers' class='remove-answer'>X</a>");
+
+                return scoreOption;
+            }
+
+            $("#add-answer").on("click", function () {
+                $("#answers").append(buildAnswer());
+
+                updateAnswerNames();
+
+                return false;
+            });
+
+            $(document).on("click", "#answers .remove-answer", function () {
+                $(this).parent("li").remove();
+
+                updateAnswerNames();
+
+                return false;
+            });
+
+            // multiple choice
+            var updateChoiceNames = function () {
+                $("#choices").children().each(function (index) {
+                    var nameBase = "QuestionObjective.Choices[" + index + "]";
+                    $(this).children(".choice-input").attr("name", nameBase);
+                });
+            };
+
+            var buildChoice = function () {
+                var choice = $("<li class='choice' />");
+                choice.append("<input class='choice-input' type='text' />")
+                      .append("<a href='#choices' class='remove-choice'>X</a>");
+
+                return choice;
+            };
+
+            $("#add-choice").on("click", function () {
+                $("#choices").append(buildChoice());
+
+                updateChoiceNames();
+
+                return false;
+            });
+
+            $(document).on("click", "#choices .remove-choice", function () {
+                $(this).parent("li").remove();
+
+                updateChoiceNames();
+
+                return false;
+            });
+        });
+    </script>
+}

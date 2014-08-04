@@ -1,0 +1,47 @@
+﻿@using DeSjoerd.Competition.Models;
+@using DeSjoerd.Competition.ActionObjectives.Models;
+@{
+    ActionSubmitPart actionSubmit = Model.ActionSubmit;
+}
+
+@if (actionSubmit.Status == SubmitStatus.Pending)
+{
+
+    var presets = actionSubmit.Objective.ObjectiveResultPresets.OrderBy(p => p.Position);
+
+    var id = string.Format("{0}{1}", "Pending", actionSubmit.Id);
+
+    Script.Require("jQueryUnobtrusive_Ajax");
+    Html.EnableUnobtrusiveJavaScript();
+    <div id="@id">
+        <ul>
+            @foreach (var preset in presets)
+            {
+                using (Ajax.BeginForm("Accept", "ActionSubmitAdmin", new { actionSubmitId = actionSubmit.Id },
+                    new AjaxOptions { HttpMethod = "POST", InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace, UpdateTargetId = id }))
+                {
+                <li>
+                    @Html.AntiForgeryTokenOrchard()
+                    <input type="hidden" name="presetId" value="@preset.Id" />
+                    <input type="submit" name="submit" value="Accept" class="button" />
+                    @preset.DisplayName: @{@preset.Points}pts
+                </li>
+                }
+            }
+            <li>
+                @using (Ajax.BeginForm("Reject", "ActionSubmitAdmin", new { actionSubmitId = actionSubmit.Id },
+            new AjaxOptions { HttpMethod = "POST", InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace, UpdateTargetId = id }))
+                {
+                    @Html.AntiForgeryTokenOrchard()
+                    <input type="submit" name="submit" value="Reject" class="button remove" />
+                }
+            </li>
+        </ul>
+
+        @{
+                Html.EnableUnobtrusiveJavaScript(false);
+        }
+    </div>
+} else {
+    <h3>@T(actionSubmit.Status.ToString())</h3>
+}

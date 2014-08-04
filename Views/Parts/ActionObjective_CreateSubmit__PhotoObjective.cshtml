@@ -1,0 +1,22 @@
+﻿@using DeSjoerd.Competition.ActionObjectives.Extensions;
+@{
+    DeSjoerd.Competition.Models.ObjectivePart objective = Model.ObjectivePart;
+}
+
+
+@using (Html.BeginFormAntiForgeryPost(Url.PhotoObjectiveSubmit(objective), FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <h4>@T("Nieuwe poging")</h4>
+    <fieldset>
+        <legend>@T("Foto")</legend>
+        <div class="row">
+            <div class="columns large-2">
+                <label for="media">@T("Kies een foto:")</label>
+            </div>
+            <div class="columns large-10">
+                <input type="file" name="media" />
+            </div>
+        </div>
+        <input type="submit" name="submit" value="@T("Opsturen")" class="button" />
+    </fieldset>
+}

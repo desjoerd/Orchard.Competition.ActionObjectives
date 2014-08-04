@@ -1,0 +1,19 @@
+﻿@{
+    DeSjoerd.Competition.ActionObjectives.Models.QuestionObjectivePart questionObjective = Model.QuestionObjectivePart;
+    DeSjoerd.Competition.Models.TeamPart team = Model.TeamPart;
+    bool teamUsedHint = Model.TeamUsedHint;
+}
+@using DeSjoerd.Competition.ActionObjectives.Extensions;
+<h3>Hint</h3>
+@if (teamUsedHint)
+{
+    <p>@questionObjective.Hint - <strong>Minpunten: @questionObjective.HintPrice</strong></p>
+}
+else
+{
+    using (Html.BeginFormAntiForgeryPost(Url.BuyHint(questionObjective), FormMethod.Post))
+    {
+        <input type="submit" class="button" name="submit" value="@T("Hint kopen: -{0} punten", questionObjective.HintPrice)" />
+    }
+}
+

@@ -1,0 +1,17 @@
+﻿<Placement>
+  <Place Parts_QuestionObjective_Edit="Content:10" />
+  
+  <Match DisplayType="Detail">
+    <Place Parts_QuestionObjective_Hint="Content:14" />
+    <Place Parts_ActionObjective_CreateSubmit="Content:15" />
+    <Place Parts_ActionObjective_Submits="Content:20" />
+  </Match>
+  <Place Parts_PhotoSubmit="Content:10" />
+  <Place Parts_VideoSubmit="Content:10" />
+  <Place Parts_QuestionSubmit="Content:10" />
+
+  <Match DisplayType="SummaryAdmin">
+    <Place Parts_ActionSubmit_MetaAdmin="Meta:10" />
+    <Place Parts_ActionSubmit_StatusAdmin="Content:20" />
+  </Match>
+</Placement>
