@@ -1,6 +1,12 @@
-﻿@{
+﻿@using Orchard.ContentManagement;
+
+@{
     DeSjoerd.Competition.ActionObjectives.Models.VideoSubmitPart videoSubmitPart = Model.VideoSubmitPart;
+    var submit = videoSubmitPart.As<DeSjoerd.Competition.ActionObjectives.Models.ActionSubmitPart>();
 }
-<p>
-    <a href="@videoSubmitPart.VideoUrl">@videoSubmitPart.VideoUrl</a>
-</p>
+<div>
+    <p>
+        <a href="@videoSubmitPart.VideoUrl">@videoSubmitPart.VideoUrl</a>
+    </p>
+    <p>@submit.Status.ToString()</p>
+</div>

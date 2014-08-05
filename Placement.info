@@ -4,7 +4,7 @@
   <Match DisplayType="Detail">
     <Place Parts_QuestionObjective_Hint="Content:14" />
     <Place Parts_ActionObjective_CreateSubmit="Content:15" />
-    <Place Parts_ActionObjective_Submits="Content:20" />
+    <Place Parts_ActionObjective_Submits="Content:13" />
   </Match>
   <Place Parts_PhotoSubmit="Content:10" />
   <Place Parts_VideoSubmit="Content:10" />

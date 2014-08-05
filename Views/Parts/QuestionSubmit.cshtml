@@ -1,6 +1,10 @@
-﻿@{
+﻿@using Orchard.ContentManagement;
+
+@{
     DeSjoerd.Competition.ActionObjectives.Models.QuestionSubmitPart questionSubmitPart = Model.QuestionSubmitPart;
+    var submit = questionSubmitPart.As<DeSjoerd.Competition.ActionObjectives.Models.ActionSubmitPart>();
 }
 <div>
     <p>@questionSubmitPart.Answer</p>
+    <p>@submit.Status.ToString()</p>
 </div>
