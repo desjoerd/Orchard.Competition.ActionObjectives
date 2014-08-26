@@ -13,6 +13,8 @@ namespace DeSjoerd.Competition.ActionObjectives.Models
             Answers = new List<QuestionAnswerRecord>();
             HintUsedByTeams = new List<TeamUsedHintRecord>();
             AutoValidate = true;
+
+            Choices = new List<QuestionChoiceRecord>();
         }
 
         public virtual IList<QuestionAnswerRecord> Answers { get; set; }
