@@ -2,7 +2,7 @@
 AntiForgery: enabled
 Author: Sjoerd van der Meer
 Website: http://met.desjoerd.com
-Version: 1.1
+Version: 1.1.1
 OrchardVersion: 1.6
 Description: This module adds action objectives to your competition
 FeatureDescription: Competition Action Objectives
